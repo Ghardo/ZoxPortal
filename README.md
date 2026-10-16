@@ -28,8 +28,8 @@ PowerToys shortcut
 |---|---|
 | `zoxide_launcher.cmd` | Entry point, runs inside the Alacritty window: fzf over `zoxide query -l`, passes the selection to the backend |
 | `zoxide_backend.ps1` | Decides between mise runner and Explorer and opens the target |
-| `focus_window.ps1` | Brings an Alacritty window to the foreground (works around the Windows foreground lock with an Alt key trick) |
-| `alacritty-zoxide.toml` | Dedicated Alacritty config: imports the regular config, only sets font size and start position |
+| `focus_window.ps1` | Centers an Alacritty window on its monitor and brings it to the foreground (works around the Windows foreground lock with an Alt key trick) |
+| `alacritty-zoxide.toml` | Dedicated Alacritty config: imports the regular config and the generated `window-position.toml`, only sets the font size |
 
 ### Design notes
 
@@ -59,7 +59,7 @@ winget install Microsoft.PowerToys Alacritty.Alacritty Microsoft.PowerShell ajee
 
 2. **Adjust `alacritty-zoxide.toml`.**
    - `import` points to the default location of the main Alacritty config (`~/AppData/Roaming/alacritty/alacritty.toml`). Adjust it only if yours lives elsewhere.
-   - `window.position` is roughly centered for 2560×1440. Alacritty has no option to center a window, so adjust the values by hand for other resolutions.
+   - The window position needs no setup. Alacritty can't center windows itself, so `focus_window.ps1` centers the window on its monitor and stores that position in `window-position.toml` (generated, git-ignored). From then on windows open centered right away; only the very first start, or the first start after changing resolution or font size, shows a short jump.
 
 3. **Create the shortcut in PowerToys.**
    PowerToys → *Keyboard Manager* → *Remap a shortcut* → add a new entry:
