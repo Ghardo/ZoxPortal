@@ -90,6 +90,12 @@ winget install Microsoft.PowerToys Alacritty.Alacritty Microsoft.PowerShell ajee
    `runner` can also combine several tasks via `depends`. This opens the Godot project in VS Code (dedicated `godot` profile) and in the Godot editor at once, while each task stays usable on its own (`mise r vsc`, `mise r g`):
 
    ```toml
+   [vars]
+   godot_version = "4.7.2-stable"
+
+   [tools]
+   godot = { version = "{{ vars.godot_version }}", os = ["windows"] }
+   
    [tasks.vscode]
    dir = "{{ config_root }}"
    run = "code -n --profile godot ."
