@@ -87,6 +87,23 @@ winget install Microsoft.PowerToys Alacritty.Alacritty Microsoft.PowerShell ajee
 
    Any other command works the same way, e.g. `cargo run`, `npm run dev` or `code .`.
 
+   `runner` can also combine several tasks via `depends`. This opens the Godot project in VS Code (dedicated `godot` profile) and in the Godot editor at once, while each task stays usable on its own (`mise r vsc`, `mise r g`):
+
+   ```toml
+   [tasks.vscode]
+   dir = "{{ config_root }}"
+   run = "code -n --profile godot ."
+   alias = ["vsc"]
+
+   [tasks.godot]
+   dir = "{{ config_root }}"
+   run = "godot -e --path ."
+   alias = ["g", "edit"]
+
+   [tasks.runner]
+   depends = ["vscode", "godot"]
+   ```
+
 ## Usage
 
 Press the shortcut, search for a directory in fzf, open it with `Enter`. `Esc` cancels and closes the window.
